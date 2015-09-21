@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Car Wars</title>
+<style>
+
+	html{
+		background-color: black;
+	}
+	.intro{
+		background-image: url(cover.jpg);
+		width: 960px;
+		height: 900px;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 100;
+	}
+	.intro a.newgame{
+		width: 300px;
+		height: 70px;
+		position: absolute;
+		right: 10px;
+		bottom: 220px;	
+	}
+	.intro a.controls{
+		width: 240px;
+		height: 70px;
+		position: absolute;
+		right: 10px;
+		bottom: 130px;
+	}
+	.intro img.controls{
+		width: 445px;
+		height: 636px;
+		margin: 150px 0 0 60px;
+		display: none;
+	}
+	#gamestage{
+		width: 960px;
+		height: 900px;
+		background-color: green;
+		background-image: url(grass.png);
+		margin: 0 auto;
+		position: relative;
+		overflow: hidden;
+		border: 5px solid #b69101;
+	}
+	#road{
+		width: 300px;
+		height: 900px;
+		background-image: url(road4.jpg);
+		background-repeat: repeat-y;   
+		display: inline-block;
+		margin-left: 180px;
+	}
+	#road2{
+		width: 300px;
+		height: 900px;
+		background-image: url(road4.jpg);
+		background-repeat: repeat-y;
+		display: inline-block;
+
+	}
+	#player{
+		position: absolute;
+		top: 610px;
+		left: 350px;
+		width: 120px;
+		height: 219px;
+		background-image: url(dodge.png);
+	}
+	.ford{
+        background-image: url(fordepic.png);
+        background-repeat: no-repeat;
+        position: absolute;
+        top:100px;
+        left:100px;
+        width: 120px;
+        height: 219px;
+	}
+	.reddodge{
+        background-image: url(reddodge.png);
+        background-repeat: no-repeat;
+        position: absolute;
+        top:100px;
+        left:100px;
+        width: 120px;
+        height: 219px;
+    }
+    .yellowdodge{
+        background-image: url(yellowdodge.png);
+        background-repeat: no-repeat;
+        position: absolute;
+        top:100px;
+        left:100px;
+        width: 120px;
+        height: 219px;
+    }
+     .landrover{
+        background-image: url(landrover.png);
+        background-repeat: no-repeat;
+        position: absolute;
+        top:100px;
+        left:100px;
+        width: 120px;
+        height: 219px;
+    }
+    .purpledodge{
+        background-image: url(purpledodge.png);
+        background-repeat: no-repeat;
+        position: absolute;
+        top:100px;
+        left:100px;
+        width: 120px;
+        height: 219px;
+    }
+    .truck{
+        background-image: url(truck.png);
+        background-repeat: no-repeat;
+        position: absolute;
+        top:100px;
+        left:100px;
+        width: 120px;
+        height: 269px;
+    }
+    .porsche{
+        background-image: url(porsche.png);
+        background-repeat: no-repeat;
+        position: absolute;
+        top:100px;
+        left:100px;
+        width: 120px;
+        height: 219px;
+    }
+    .rig{
+        background-image: url(rig.png);
+        background-repeat: no-repeat;
+        position: absolute;
+        top:100px;
+        left:100px;
+        width: 160px;
+        height: 724px;
+    }
+	.bullet{
+	    width: 10px;
+	    height: 43px;
+	    background-image: url(bullet.png);
+	    background-repeat: no-repeat;
+	    position: absolute;
+	    top: 100px;
+	    left: 100px;
+	}
+    .explosionbox{
+        width: 10px;
+        height: 10px;
+    
+        position: absolute;
+        top: 100px;
+        left: 100px;
+    }
+    .exp{
+        width: 184px;
+        height: 161px;
+        background-image: url(explosion.png);
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    #score{
+    	position: absolute;
+    	z-index: 100;
+    	width: 120px;
+    	height: 120px;
+    	top: 30px;
+    	right: 20px;
+    	font-size: 30px;
+    	font-weight: bold;
+    	color: white;
+    }
+    .cars{
+    	width: 150px;
+    	float: right;
+    	margin-top: 120px;
+    	color: white;
+    }
+    .cars img{
+    	width: 100px;
+    	border: 3px solid black;
+    }
+    p{
+    	padding-right: 12px;
+    	font-weight: bold;
+    	font-size: 18px;
+    	line-height: 25px;
+    }
+
+    
+	</style>
+</head>
+<body>
+
+	<div id="gamestage">
+
+		<div id="road"></div>
+
+		<div id="road2"></div>
+
+		<div id="player"></div>	
+
+		<div id="score">Score: 0</div>	
+
+		<div class="cars">
+		<p>Unlock each car by shooting down oncoming traffic.</p>
+		<br>
+
+			<div class="img-dodge"><img src="dodge.jpg" alt="dodge"> 5</div>
+			
+			<div class="img-fiesta"><img src="fiesta.jpg" alt="fiesta"> 20</div>
+			
+			<div class="img-nascar"><img src="camry-microsoft.jpg" alt="camry"> 50</div>
+			
+			<div class="img-police"><img src="police-car.jpg" alt="police"> 80</div>
+
+			<div class="img-Koenigsegg"><img src="Koenigsegg.jpg" alt="koenigsegg"> 100</div>
+
+			<div class="img-lambo"><img src="lambo.jpg" alt="lambo"> 200</div>
+			
+		</div>
+
+		<div class="intro">
+			<a href="#" class="newgame"></a>
+			<a href="#" class="controls"></a>
+			<img src="controls.png" class="controls" alt="controls">
+		</div>
+
+	</div>	
+	
+
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="helpers.js"></script>
+<script>
+
+
+$(document).ready(function(){
+
+  var score = 0; //keep track of score
+  var hit; //run createenemy over and over
+
+
+  $('a.newgame').click(function() {
+    // remove the start menu
+    $('.intro').css({
+      display: 'none'
+    });
+
+    //show the player again
+    $('#player').show().css({
+      "background-image": "url(dodge.png)"
+    });
+
+    //reset the score and cars unlocked images
+    score = 0;
+    $('#score').html('Score: ' + score);
+    $("[class^='img-']").show();
+
+    //reset gamestage background color to default
+    $('#gamestage').css({
+      background: 'green'
+    });
+
+    hit = setInterval(createenemy, 1000);
+  });
+
+
+  //clicking on controls willreveal the control menu
+  $('a.controls').click(function() {
+    $('.intro img.controls').fadeIn(300);
+  });
+
+  //clicking on the control menu will close the menu
+  $('.intro img.controls').click(function() {
+    $(this).fadeOut(300);
+  });
+
+
+
+  /*
+  * SETINTERVAL TO RUN BGFRAME OVER AND OVER
+  */
+
+  setInterval(bgframe, 1000 / 30);
+
+  var bgpos = 0; //how far the background has scrolled
+  function bgframe() {
+      //this will be a single frame of the background moving
+
+      //add 2 to bgpos
+      bgpos += 8;
+
+      $('#road, #road2').css({
+        //backgroundPosition:bgpos+'px 0px'
+        backgroundPosition: '0px ' + bgpos + 'px'
+
+      });
+
+    } //end bgframe()	
+
+
+
+  var dir = {
+    up: false,
+    down: false,
+    left: false,
+    right: false
+  };
+
+  //MOVEMENT SPEED (px)
+  var speed = 2;
+
+
+
+  /*
+  * MOVE PLAYER
+  */
+
+  $(document).keydown(function(e) {
+
+    console.log(e.which);
+
+    //up 38
+    if (e.which == 38) {
+      dir.up = true; //turn on up direction
+    }
+    //down 40
+    if (e.which == 40) {
+      dir.down = true; //turn on down direction
+    }
+    //left 37
+    if (e.which == 37) {
+      dir.left = true; //turn on left direction
+    }
+    //right 39
+    if (e.which == 39) {
+      dir.right = true; //turn on right direction
+    }
+    //spacebar is 32
+    if (e.which == 32) {
+      //increase speed variable
+      speed = 4;
+    }
+
+  }); //end keydown
+
+
+  $(document).keyup(function(e) {
+
+    //console.log(e.which);
+
+    //up 38
+    if (e.which == 38) {
+      dir.up = false; //turn on up direction
+    }
+    //down 40
+    if (e.which == 40) {
+      dir.down = false; //turn on down direction
+    }
+    //left 37
+    if (e.which == 37) {
+      dir.left = false; //turn on left direction
+    }
+    //right 39
+    if (e.which == 39) {
+      dir.right = false; //turn on right direction
+    }
+    //spacebar is 32
+    if (e.which == 32) {
+      //decrease speed variable
+      speed = 2;
+    }
+
+  }); //end keyup
+
+
+
+
+  /*
+  * MOVEMENT
+  */
+
+  function playermove() {
+
+      //output the dir variable so we can test if they are working
+      //console.log('1'+dir.up+','+ dir.down);
+      //console.log('2'+dir.left+','+ dir.right);
+
+
+      var newtop = 0;
+      var newleft = 0;
+
+
+
+      //check directions and add or subtract to addtop/addleft
+      if (dir.up == true) {
+        newtop -= speed;
+      }
+      if (dir.down == true) {
+        newtop += speed;
+      }
+      if (dir.left == true) {
+        newleft -= speed;
+      }
+      if (dir.right == true) {
+        newleft += speed;
+      }
+
+
+      var locationtop = $('#player').position().top;
+      var locationleft = $('#player').position().left;
+
+
+
+
+      //set boundaries so #player doesn't go outside of the gamestage
+      if (locationleft + newleft > 150 && locationleft + newleft < 700 && locationtop + newtop > 0 && locationtop + newtop < 680) {
+
+        $('#player').css({
+          top: '+=' + newtop,
+          left: '+=' + newleft
+        });
+
+
+      } //end if
+
+    } //end shipmove()
+
+  //run shipmove function at an onterval
+  setInterval(playermove, 30 / 1000);
+
+
+
+
+  /*
+  * CREATE ENEMIES TO SHOOT AT
+  */
+
+  var cararray = ['reddodge', 'ford', 'purpledodge', 'landrover', 'yellowdodge', 'truck', 'porsche', 'rig'];
+
+  function createenemy() {
+      //create a new div with enemy class
+      var enemy = $('<div>').addClass('enemies').addClass(getarrayitem(cararray));
+
+      //set starting position, right side of browser
+      enemy.css({
+        top: -700, //random value from 0 to bottom of browser
+        left: Math.random() * (750 - 300) + 160 //right side of browser
+      });
+
+      //add to page
+      $('#gamestage').append(enemy);
+
+      //animate from top of browser (0) 
+      enemy.animate({
+        top: 1000
+      }, 2000, function() {
+        //animate callback
+
+        //remove enemy
+        //$(this).remove();
+
+        //fadeout enemy then remove
+        $(this).fadeOut(500, function() {
+          //fadeOut callback
+          $(this).remove();
+        });
+
+      }); //end animate
+
+    } //end createenemy()
+
+
+
+
+  /*
+  * CREATE BULLETS
+  */
+
+  $(document).keydown(function(e) {
+    if (e.which == 32) {
+      //create a new div and give class of 'bullet'
+      var bullet = $('<div>').addClass('bullet');
+
+      //add starting top and left value to bullet
+      var locationtop = $('#player').position().top;
+      var locationleft = $('#player').position().left + 55;
+
+      bullet.css({
+        top: locationtop,
+        left: locationleft
+      });
+
+      //add new div to the page
+      $('#gamestage').append(bullet);
+
+
+
+
+      //animate bullets in straight line from the top
+      //also removes bullet at the end
+      bullet.animate({
+        top: $('#player').height() - 300
+      }, 1000, function() {
+        //animate callback runs when animation is complete and remove bullet
+        $(this).remove();
+
+
+      }); //end animate
+    }
+  }); //end keyup function
+
+
+
+  /*
+  * HIT DETECT
+  */
+
+  function checkhit() {
+      //circlehit does not do everything by itself. We need to get the items and send it to the circlehit
+
+      //this will be a many to many 
+      $('.bullet').each(function() {
+        //for each .bullet...... run this code
+
+        //save enemy this reference
+        var savedbullet = $(this);
+
+        $('.ford, .reddodge, .landrover, .yellowdodge, .truck, .porsche, .purpledodge').each(function() {
+          //run circlehit with the two items
+          if (circlehit(savedbullet, $(this))) {
+            //add an explosion to where the enemy died
+            var enemytop = $(this).position().top;
+            var enemyleft = $(this).position().left;
+
+            //send the coordinates to the explosion function
+            createexplosion(enemytop, enemyleft);
+
+
+            //hit detected, remove both items
+            $(this).remove();
+            savedbullet.remove();
+
+            //add to score and update score div
+            score += 1;
+            $('#score').html('Score: ' + score);
+
+            if (score == 5) {
+              $('#player').css({
+                "background-image": "url(playerdodge.png)"
+              });
+              $('#gamestage').css({
+                background: '#744d2e'
+              });
+              $('.img-dodge').fadeOut(2000);
+
+            } else if (score == 20) {
+              $('#player').css({
+                "background-image": "url(playerfiesta.png)"
+              });
+              $('#gamestage').css({
+                background: 'orange'
+              });
+              $('.img-fiesta').fadeOut(2000);
+
+            } else if (score == 50) {
+              $('#player').css({
+                "background-image": "url(playernascar.png)"
+              });
+              $('#gamestage').css({
+                background: 'blue'
+              });
+              $('.img-nascar').fadeOut(2000);
+
+            } else if (score == 80) {
+              $('#player').css({
+                "background-image": "url(playerpolice.png)"
+              });
+              $('#gamestage').css({
+                background: 'brown'
+              });
+              $('.img-police').fadeOut(2000);
+
+            } else if (score == 100) {
+              $('#player').css({
+                "background-image": "url(playerk.png)"
+              });
+              $('#gamestage').css({
+                background: '#636769'
+              });
+              $('.img-Koenigsegg').fadeOut(2000);
+
+            } else if (score == 200) {
+              $('#player').css({
+                "background-image": "url(lambo.png)"
+              });
+              $('#gamestage').css({
+                background: '#aba5a5'
+              });
+              $('.img-lambo').fadeOut(2000);
+
+            }
+
+          }
+        }); //end .enemy each
+
+      }); //end .bullet each function
+
+
+
+      /*
+      * COLISSION
+      */
+
+      $('.enemies').each(function() {
+        var playertop = $('#player').position().top;
+        var playerleft = $('#player').position().left;
+
+        if (recthit('#player', $(this))) {
+          //hit detect
+
+          //check what type
+          createexplosion(playertop, playerleft);
+          $('#player').hide();
+          //$('#gamestage').fadeOut(4000);
+          $('.intro').delay(2500).fadeIn(800);
+
+          gameover();
+
+        }
+
+      }); //end enemies each
+
+
+    } //end checkhit()
+
+
+  /*
+  * Run checkhit fast enough to catch the hits
+  */
+
+  setInterval(checkhit, 1000 / 30);
+
+
+
+  /*
+  * HIT DETECTION
+  */
+
+  function circlehit(circle1, circle2) {
+      //DO NOT MODIFY THIS FUNCTION
+
+      var c1 = $(circle1);
+      var c2 = $(circle2);
+
+      //we need these items from the 2 circles: radius, x coordinates, y coordinates
+      c1.r = c1.width() / 2; //radius is half the width or height
+      c1.x = c1.position().left + c1.r; //add radius to coordinate to make it 
+      c1.y = c1.position().top + c1.r;
+
+
+      c2.r = c2.width() / 2; //radius is half the width or height
+      c2.x = c2.position().left + c2.r; //add radius to coordinate to make it 
+      c2.y = c2.position().top + c2.r;
+
+
+      var distx = c1.x - c2.x;
+      var disty = c1.y - c2.y;
+
+      var squaredist = (distx * distx) + (disty * disty);
+
+      return squaredist <= (c1.r + c2.r) * (c1.r + c2.r);
+
+      //this function will return true or false
+      //false if they are not in contact
+
+    } //end circlehit()
+
+
+
+
+  /*
+  * RECTANGLE HIT
+  */
+
+  function recthit(rectone, recttwo) {
+
+      var r1 = $(rectone);
+      var r2 = $(recttwo);
+
+      var r1x = r1.offset().left;
+      var r1w = r1.width();
+      var r1y = r1.offset().top;
+      var r1h = r1.height();
+
+      var r2x = r2.offset().left;
+      var r2w = r2.width();
+      var r2y = r2.offset().top;
+      var r2h = r2.height();
+
+      if (r1y + r1h < r2y ||
+        r1y > r2y + r2h ||
+        r1x > r2x + r2w ||
+        r1x + r1w < r2x) {
+        return false;
+      } else {
+        return true;
+      }
+
+    } //end function 
+
+
+
+
+  /*
+  * EXPLOSION
+  */
+
+  function createexplosion(etop, eleft) {
+      //first create 1x1 px div to contain the explosion
+      var explosionbox = $('<div>').addClass('explosionbox');
+
+      //set location to where enemy died
+      explosionbox.css({
+        top: etop,
+        left: eleft
+      });
+
+
+      //add a bunch of .exp divs into the .explosionbox
+      for (var i = 0; i < 10; i++) {
+        //create .exp div
+        var exp = $('<div>').addClass('exp');
+
+        //add to explosion box
+        explosionbox.append(exp);
+
+        //animate
+        exp.animate({
+          top: (Math.random() * 200) - 100, //range from -100 to 100
+          left: (Math.random() * 200) - 100,
+          //opacity: 0 moved it to the explosionbox.animate
+        }, 500);
+
+      } //end for loop
+
+
+
+      $('#gamestage').append(explosionbox);
+
+      explosionbox.animate({
+        opacity: 0
+      }, 500, function() {
+        $(this).remove();
+      });
+    } //end createexplosion()
+
+
+
+
+  /*
+  * Stops creating enemies
+  */
+
+  function gameover() {
+    clearInterval(hit);
+    $('#player').css({
+      top: 610,
+      left: 350
+    });
+
+  }
+
+});//end document.ready()
+
+
+</script>
+</body>
+</html>
